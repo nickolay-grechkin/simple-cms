@@ -1,11 +1,13 @@
 export const API_ROUTES = {
   SCREEN: {
     GET: "/screen",
+    GET_ALL: "/screen/all",
     CREATE: "/screen",
+    UPDATE: "/screen",
     SECTION: {
-      ADD: "/screen/section",
+      CREATE: "/screen/section",
       ITEM: {
-        ADD: "/screen/section/item",
+        CREATE: "/screen/section/item",
       },
     },
   },

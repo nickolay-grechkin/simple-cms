@@ -38,8 +38,8 @@ export const addItemToSection = async (
       },
     },
     {
-      new: true, // Повертає оновлений документ
-      runValidators: true, // Запускає валідатори схеми
+      new: true,
+      runValidators: true,
     }
   );
 
@@ -48,4 +48,24 @@ export const addItemToSection = async (
   }
 
   return updatedScreen;
+};
+
+export const updateScreen = async (screenId: string, sections: any) => {
+  const updatedScreen = await ScreenModel.findByIdAndUpdate(
+    screenId,
+    { sections },
+    { new: true }
+  );
+
+  if (!updatedScreen) {
+    throw new Error("Screen not found");
+  }
+
+  return updatedScreen;
+};
+
+export const getAllScreens = async () => {
+  const screens = await ScreenModel.find();
+
+  return screens;
 };

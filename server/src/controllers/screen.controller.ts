@@ -4,11 +4,14 @@ import {
   createScreenSchema,
   addSectionToScreenSchema,
   addItemToSectionSchema,
+  updateScreenSchema,
 } from "../validation/screen";
 import {
   addItemToSection,
   addSectionToScreen,
   createScreen,
+  getAllScreens,
+  updateScreen,
 } from "../services/screen.service";
 
 export const getScreenConfigs = async (
@@ -103,20 +106,20 @@ export const addItemToSectionController = async (
   }
 };
 
-export const updateScreenConfig = async (
+export const updateScreenController = async (
   req: Request,
   res: Response
 ): Promise<void> => {
   try {
-    const updatedConfig = await ScreenModel.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true }
-    );
-    if (!updatedConfig) {
-      res.status(404).json({ message: "Configuration not found" });
+    const { success, data } = updateScreenSchema.safeParse(req.body);
+
+    if (!success) {
+      res.status(400).json({ message: "Invalid request body" });
       return;
     }
+
+    const updatedConfig = await updateScreen(data.screenId, data.sections);
+
     res.status(200).json(updatedConfig);
   } catch (error) {
     res.status(400).json({ message: (error as Error).message });
@@ -139,17 +142,13 @@ export const deleteScreenConfig = async (
   }
 };
 
-export const getScreenForMobile = async (
+export const getAllScreensController = async (
   req: Request,
   res: Response
 ): Promise<void> => {
   try {
-    const config = await ScreenModel.findOne().sort({ createdAt: -1 });
-    if (!config) {
-      res.status(404).json({ message: "No screen configuration found" });
-      return;
-    }
-    res.status(200).json(config);
+    const screens = await getAllScreens();
+    res.status(200).json(screens);
   } catch (error) {
     res.status(500).json({ message: (error as Error).message });
   }

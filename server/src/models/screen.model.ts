@@ -1,6 +1,6 @@
 import mongoose, { Schema, Document } from "mongoose";
 
-export interface IContentItem extends Document {
+export interface IContentItem {
   _id: string;
   title: string;
   description?: string;
@@ -9,7 +9,7 @@ export interface IContentItem extends Document {
   order: number;
 }
 
-export interface ISection extends Document {
+export interface ISection {
   _id: string;
   type: "banner" | "vertical" | "horizontal" | "grid";
   title?: string;
@@ -17,7 +17,7 @@ export interface ISection extends Document {
   order: number;
 }
 
-export interface IScreen extends Document {
+export interface IScreen {
   _id: string;
   name: string;
   sections: ISection[];
