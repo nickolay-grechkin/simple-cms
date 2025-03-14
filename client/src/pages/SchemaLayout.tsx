@@ -4,13 +4,13 @@ import {
   useUpdateScreen,
 } from "../api/screens";
 import { Section, Screen } from "../types";
-import DraggableWrapper, { SortableItem } from "./DraggableSections";
-import { Box, Button } from "@chakra-ui/react";
-import { JsonPreview } from "./JsonPreview";
+import { DraggableWrapper } from "../components/DraggableSections";
+import { Box, Button, Flex } from "@chakra-ui/react";
 import { useState } from "react";
 import { useEffect } from "react";
-import { AddSectionDialog } from "./AddSectionDialog";
+import { AddSectionDialog } from "../components/AddSectionDialog";
 import { SectionType } from "../enums/section";
+import { SectionSchemaItem } from "../components/SectionSchemaItem/SectionSchemaItem";
 
 export const SchemaLayout: React.FC = () => {
   const { data: screens, isLoading, error } = useGetAllScreens();
@@ -65,20 +65,48 @@ export const SchemaLayout: React.FC = () => {
   if (!currentScreen) return <Box>No screens available</Box>;
 
   return (
-    <Box>
-      <DraggableWrapper
-        sections={currentScreen.sections}
-        onOrderChange={handleSectionOrderChange}
+    <Flex>
+      <Box
+        width="200px"
+        height="100vh"
+        borderRight="1px solid #e0e0e0"
+        padding="20px"
       >
-        <div>
-          {currentScreen.sections.map((section) => (
-            <SortableItem key={section._id} section={section} />
-          ))}
-        </div>
-      </DraggableWrapper>
-      <Button onClick={handleSave}>Save</Button>
-      <JsonPreview data={currentScreen} />
-      <AddSectionDialog onSave={handleAddSection} />
-    </Box>
+        Homepage
+      </Box>
+      <Flex
+        flexDirection="column"
+        justifyContent="space-between"
+        padding="3rem"
+        width="100%"
+        overflow="hidden"
+      >
+        <DraggableWrapper
+          sections={currentScreen.sections}
+          onOrderChange={handleSectionOrderChange}
+        >
+          <div>
+            {currentScreen.sections.map((section) => (
+              <SectionSchemaItem key={section._id} section={section} />
+            ))}
+          </div>
+        </DraggableWrapper>
+        <Flex alignItems="center" gap="1rem" marginTop="2rem">
+          <AddSectionDialog onSave={handleAddSection} />
+          <Button
+            height="48px"
+            padding="16px"
+            backgroundColor="#6200c4"
+            color="white"
+            borderRadius="4px"
+            cursor="pointer"
+            fontWeight="bold"
+            onClick={handleSave}
+          >
+            Save
+          </Button>
+        </Flex>
+      </Flex>
+    </Flex>
   );
 };

@@ -9,15 +9,11 @@ import {
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 
-interface JsonPreviewProps {
+type JsonPreviewProps = {
   data: any;
-  title?: string;
-}
+};
 
-export function JsonPreview({
-  data,
-  title = "JSON Preview",
-}: JsonPreviewProps) {
+export function JsonPreview({ data }: JsonPreviewProps) {
   const [jsonString, setJsonString] = useState("");
   const [hasCopied, setHasCopied] = useState(false);
 
@@ -33,14 +29,14 @@ export function JsonPreview({
   };
 
   return (
-    <Dialog.Root>
+    <Dialog.Root size="xl">
       <Dialog.Trigger colorScheme="blue">Переглянути JSON</Dialog.Trigger>
       <Portal>
         <Dialog.Backdrop />
         <Dialog.Positioner>
           <Dialog.Content>
             <Dialog.Header>
-              <Dialog.Title>{title}</Dialog.Title>
+              <Dialog.Title>JSON Preview</Dialog.Title>
               <Dialog.CloseTrigger>
                 <CloseButton size="sm" />
               </Dialog.CloseTrigger>

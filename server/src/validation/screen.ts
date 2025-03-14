@@ -20,6 +20,7 @@ export const addItemToSectionSchema = z.object({
     description: z.string().min(1),
     imageUrl: z.string().min(1),
     actionUrl: z.string().min(1),
+    order: z.number().min(0),
   }),
 });
 
@@ -33,7 +34,6 @@ export const updateScreenSchema = z.object({
       type: z.enum(["banner", "vertical", "horizontal", "grid"]),
       items: z.array(
         z.object({
-          _id: z.string().min(1),
           title: z.string().min(1),
           description: z.string().min(1),
           imageUrl: z.string().min(1),

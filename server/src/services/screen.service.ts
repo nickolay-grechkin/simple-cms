@@ -30,7 +30,10 @@ export const addSectionToScreen = async (
 export const addItemToSection = async (
   screenId: string,
   sectionId: string,
-  item: Pick<IContentItem, "title" | "description" | "imageUrl" | "actionUrl">
+  item: Pick<
+    IContentItem,
+    "title" | "description" | "imageUrl" | "actionUrl" | "order"
+  >
 ) => {
   const screen = await ScreenModel.findById(screenId);
 

@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiClient } from "./client";
 import { Section } from "../types";
-import { ItemFormData } from "../components/EditItemForm";
+import { ItemFormData } from "../components/SectionBlocks";
 
 export const useGetAllScreens = () => {
   return useQuery({

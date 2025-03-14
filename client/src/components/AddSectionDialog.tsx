@@ -4,15 +4,8 @@ import {
   Portal,
   Input,
   Stack,
-  CloseButton,
   Field,
-  SelectRoot,
-  SelectItem,
-  SelectTrigger,
-  SelectValueText,
   createListCollection,
-  SelectContent,
-  SelectLabel,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { z } from "zod";
@@ -84,7 +77,15 @@ export function AddSectionDialog({ onSave }: AddSectionDialogProps) {
       open={isOpen}
       onOpenChange={(details) => setIsOpen(details.open)}
     >
-      <Dialog.Trigger colorScheme="blue">Додати секцію</Dialog.Trigger>
+      <Dialog.Trigger
+        padding="12px"
+        backgroundColor="#f0e2fe"
+        color="#6200c4"
+        borderRadius="4px"
+        cursor="pointer"
+      >
+        Додати секцію
+      </Dialog.Trigger>
 
       <Portal>
         <Dialog.Backdrop />
@@ -113,25 +114,6 @@ export function AddSectionDialog({ onSave }: AddSectionDialogProps) {
 
                   <Field.Root invalid={!!errors.type}>
                     <Field.Label>Тип секції</Field.Label>
-                    {/* <SelectRoot
-                      collection={sectionTypes}
-                      size="sm"
-                      width="320px"
-                      color="black"
-                      {...register("type")}
-                    >
-                      <SelectLabel>Select framework</SelectLabel>
-                      <SelectTrigger>
-                        <SelectValueText placeholder="Select movie" />
-                      </SelectTrigger>
-                      <SelectContent color="black">
-                        {sectionTypes.items.map((type) => (
-                          <SelectItem item={type} key={type.value}>
-                            {type.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </SelectRoot> */}
                     <select {...register("type")}>
                       <option value="horizontal">Horizontal</option>
                       <option value="vertical">Vertical</option>

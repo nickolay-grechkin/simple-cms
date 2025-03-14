@@ -1,7 +1,7 @@
 import "./App.css";
-import { ContentLayout } from "./components/ContentLayout";
-import { Main } from "./components/Main";
-import { SchemaLayout } from "./components/ScreenLayout";
+import { ContentLayout } from "./pages/ContentLayout";
+import { Main } from "./pages/Main";
+import { SchemaLayout } from "./pages/SchemaLayout";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
