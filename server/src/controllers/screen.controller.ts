@@ -111,10 +111,10 @@ export const updateScreenController = async (
   res: Response
 ): Promise<void> => {
   try {
-    const { success, data } = updateScreenSchema.safeParse(req.body);
+    const { success, data, error } = updateScreenSchema.safeParse(req.body);
 
     if (!success) {
-      res.status(400).json({ message: "Invalid request body" });
+      res.status(400).json({ message: error.message });
       return;
     }
 

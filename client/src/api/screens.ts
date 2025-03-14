@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiClient } from "./client";
 import { Section } from "../types";
+import { ItemFormData } from "../components/EditItemForm";
 
 export const useGetAllScreens = () => {
   return useQuery({
@@ -50,25 +51,56 @@ export const useUpdateScreen = () => {
   });
 };
 
-// export const useAddSectionToScreen = () => {
-//   const queryClient = useQueryClient();
+export const useAddSectionToScreen = () => {
+  const queryClient = useQueryClient();
 
-//   return useMutation({
-//     mutationFn: async ({
-//       screenId,
-//       sectionData,
-//     }: {
-//       screenId: string;
-//       sectionData: Omit<Section, "id">;
-//     }) => {
-//       const { data } = await apiClient.post(
-//         `/screens/${screenId}/sections`,
-//         sectionData
-//       );
-//       return data;
-//     },
-//     onSuccess: () => {
-//       queryClient.invalidateQueries({ queryKey: ["screens"] });
-//     },
-//   });
-// };
+  return useMutation({
+    mutationFn: async ({
+      screenId,
+      sectionData,
+    }: {
+      screenId: string;
+      sectionData: {
+        title: string;
+        type: "horizontal" | "vertical" | "banner" | "grid";
+      };
+    }) => {
+      const { data } = await apiClient.post(`/screen/section`, {
+        screenId,
+        section: { ...sectionData },
+      });
+      return data;
+    },
+    onSuccess: () => {
+      console.log("onSuccess");
+      queryClient.invalidateQueries({ queryKey: ["screens"] });
+    },
+  });
+};
+
+export const useAddItemToSection = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({
+      screenId,
+      sectionId,
+      itemData,
+    }: {
+      screenId: string;
+      sectionId: string;
+      itemData: ItemFormData;
+    }) => {
+      const { data } = await apiClient.post(`/screen/section/item`, {
+        screenId,
+        sectionId,
+        item: { ...itemData },
+      });
+      return data;
+    },
+    onSuccess: () => {
+      console.log("onSuccess");
+      queryClient.invalidateQueries({ queryKey: ["screens"] });
+    },
+  });
+};

@@ -8,11 +8,19 @@ export const createScreen = async (name: string) => {
 
 export const addSectionToScreen = async (
   screenId: string,
-  section: Pick<ISection, "type" | "title" | "order">
+  section: Pick<ISection, "type" | "title">
 ) => {
+  const existingScreen = await ScreenModel.findById(screenId);
+
+  if (!existingScreen) {
+    throw new Error("Screen not found");
+  }
+
+  const newOrder = existingScreen.sections.length;
+
   const screen = await ScreenModel.findByIdAndUpdate(
     screenId,
-    { $push: { sections: section } },
+    { $push: { sections: { ...section, order: newOrder, items: [] } } },
     { new: true }
   );
 
@@ -22,11 +30,14 @@ export const addSectionToScreen = async (
 export const addItemToSection = async (
   screenId: string,
   sectionId: string,
-  item: Pick<
-    IContentItem,
-    "title" | "description" | "imageUrl" | "actionUrl" | "order"
-  >
+  item: Pick<IContentItem, "title" | "description" | "imageUrl" | "actionUrl">
 ) => {
+  const screen = await ScreenModel.findById(screenId);
+
+  if (!screen) {
+    throw new Error("Screen not found");
+  }
+
   const updatedScreen = await ScreenModel.findOneAndUpdate(
     {
       _id: screenId,

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import {
   DndContext,
   closestCenter,
@@ -16,10 +16,9 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { Button } from "@chakra-ui/react";
 import { Section } from "../types/section";
 
-function SortableItem({ section }: { section: Section }) {
+export function SortableItem({ section }: { section: Section }) {
   const {
     attributes,
     listeners,
@@ -34,11 +33,13 @@ function SortableItem({ section }: { section: Section }) {
     transition,
     padding: "10px",
     margin: "5px 0",
-    backgroundColor: isDragging ? "#f0f0ff" : "red",
+    backgroundColor: isDragging ? "#f0f0ff" : "white",
+    color: "black",
     border: "1px solid #ddd",
     borderRadius: "4px",
     display: "flex",
     alignItems: "center",
+    gap: "10px",
     boxShadow: isDragging ? "0 0 5px rgba(0, 0, 0, 0.2)" : "none",
     zIndex: isDragging ? 1 : 0,
   };
@@ -47,19 +48,20 @@ function SortableItem({ section }: { section: Section }) {
     <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
       <div style={{ marginRight: "10px", cursor: "grab" }}>⠿</div>
       <div>{section.title}</div>
+      <div>{section.type}</div>
     </div>
   );
 }
 
-export default function DraggableSections({
-  screenSections,
-  onSave,
+export default function DraggableWrapper({
+  sections,
+  onOrderChange,
+  children,
 }: {
-  screenSections: Section[];
-  onSave: (sections: Section[]) => void;
+  sections: any[];
+  onOrderChange: (sections: any[]) => void;
+  children: React.ReactNode;
 }) {
-  const [sections, setSections] = useState<Section[]>(screenSections);
-
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
@@ -75,47 +77,25 @@ export default function DraggableSections({
     const { active, over } = event;
 
     if (over && active.id !== over.id) {
-      setSections((currentItems) => {
-        const oldIndex = currentItems.findIndex(
-          (item) => item._id === active.id
-        );
-        const newIndex = currentItems.findIndex((item) => item._id === over.id);
+      const oldIndex = sections.findIndex((item) => item._id === active.id);
+      const newIndex = sections.findIndex((item) => item._id === over.id);
 
-        return arrayMove(currentItems, oldIndex, newIndex);
-      });
+      onOrderChange(arrayMove(sections, oldIndex, newIndex));
     }
   }
 
-  const handleSave = () => {
-    const mappedSections = sections.map((section, index) => ({
-      ...section,
-      order: index,
-    }));
-
-    onSave(mappedSections);
-  };
-
   return (
-    <div style={{ width: "400px", margin: "0 auto", padding: "20px" }}>
-      <h2 style={{ marginBottom: "20px" }}>Сортований список секцій</h2>
-
-      <DndContext
-        sensors={sensors}
-        collisionDetection={closestCenter}
-        onDragEnd={handleDragEnd}
+    <DndContext
+      sensors={sensors}
+      collisionDetection={closestCenter}
+      onDragEnd={handleDragEnd}
+    >
+      <SortableContext
+        items={sections.map((section) => section._id)}
+        strategy={verticalListSortingStrategy}
       >
-        <SortableContext
-          items={sections.map((section) => section._id)}
-          strategy={verticalListSortingStrategy}
-        >
-          <div>
-            {sections.map((section) => (
-              <SortableItem key={section._id} section={section} />
-            ))}
-          </div>
-        </SortableContext>
-      </DndContext>
-      <Button onClick={handleSave}>Save</Button>
-    </div>
+        {children}
+      </SortableContext>
+    </DndContext>
   );
 }
