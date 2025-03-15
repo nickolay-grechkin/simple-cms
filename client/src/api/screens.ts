@@ -1,7 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiClient } from "./client";
-import { Section } from "../types";
-import { ItemFormData } from "../components/SectionBlocks";
+import { SectionSchema } from "../validation";
 
 export const useGetAllScreens = () => {
   return useQuery({
@@ -13,20 +12,6 @@ export const useGetAllScreens = () => {
   });
 };
 
-// export const useCreateScreen = () => {
-//   const queryClient = useQueryClient();
-
-//   return useMutation({
-//     mutationFn: async (screenData: Omit<Screen, "id">) => {
-//       const { data } = await apiClient.post("/screens", screenData);
-//       return data;
-//     },
-//     onSuccess: () => {
-//       queryClient.invalidateQueries({ queryKey: ["screens"] });
-//     },
-//   });
-// };
-
 export const useUpdateScreen = () => {
   const queryClient = useQueryClient();
 
@@ -36,7 +21,7 @@ export const useUpdateScreen = () => {
       sections,
     }: {
       screenId: string;
-      sections: Section[];
+      sections: SectionSchema[];
     }) => {
       const { data } = await apiClient.put("/screen", {
         screenId,
@@ -44,62 +29,52 @@ export const useUpdateScreen = () => {
       });
       return data;
     },
-    onSuccess: (data) => {
-      console.log(data);
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["screens"] });
     },
   });
 };
 
-export const useAddSectionToScreen = () => {
+export const useUpsertSection = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: async ({
       screenId,
-      sectionData,
+      section,
     }: {
       screenId: string;
-      sectionData: {
-        title: string;
-        type: "horizontal" | "vertical" | "banner" | "grid";
-      };
+      section: SectionSchema;
     }) => {
       const { data } = await apiClient.post(`/screen/section`, {
         screenId,
-        section: { ...sectionData },
+        section,
       });
       return data;
     },
     onSuccess: () => {
-      console.log("onSuccess");
       queryClient.invalidateQueries({ queryKey: ["screens"] });
     },
   });
 };
 
-export const useAddItemToSection = () => {
+export const useDeleteSection = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: async ({
       screenId,
       sectionId,
-      itemData,
     }: {
       screenId: string;
       sectionId: string;
-      itemData: ItemFormData;
     }) => {
-      const { data } = await apiClient.post(`/screen/section/item`, {
-        screenId,
-        sectionId,
-        item: { ...itemData },
+      const { data } = await apiClient.delete(`/screen/section`, {
+        data: { screenId, sectionId },
       });
       return data;
     },
     onSuccess: () => {
-      console.log("onSuccess");
       queryClient.invalidateQueries({ queryKey: ["screens"] });
     },
   });

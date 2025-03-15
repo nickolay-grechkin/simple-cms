@@ -1,21 +1,9 @@
-import {
-  Accordion,
-  Flex,
-  Popover,
-  Portal,
-  Button,
-  Icon,
-  Stack,
-  Field,
-  Input,
-  Text,
-} from "@chakra-ui/react";
+import { Accordion, Flex, Stack, Field, Input } from "@chakra-ui/react";
 import { useSortable } from "@dnd-kit/sortable";
-import { SectionsSchemaType } from "../pages/ContentLayout";
-import { UseFormRegister } from "react-hook-form";
+import { FieldErrors, UseFormRegister } from "react-hook-form";
 import { CSS } from "@dnd-kit/utilities";
-import { TbDotsVertical } from "react-icons/tb";
-import { FaRegTrashAlt } from "react-icons/fa";
+import { BlockSchema, SectionsSchemaType } from "../validation";
+import { DeletePopover } from "./DeletePopover/DeletePopover";
 
 type BlockProps = {
   sectionIndex: number;
@@ -23,6 +11,7 @@ type BlockProps = {
   blockId: string;
   register: UseFormRegister<SectionsSchemaType>;
   onDelete: () => void;
+  error?: FieldErrors<BlockSchema>;
 };
 
 export const Block: React.FC<BlockProps> = ({
@@ -31,6 +20,7 @@ export const Block: React.FC<BlockProps> = ({
   blockId,
   register,
   onDelete,
+  error,
 }) => {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: blockId });
@@ -48,7 +38,6 @@ export const Block: React.FC<BlockProps> = ({
   return (
     <Accordion.Root
       collapsible
-      width="50%"
       ref={setNodeRef}
       style={style}
       {...attributes}
@@ -67,87 +56,58 @@ export const Block: React.FC<BlockProps> = ({
         >
           <Flex justifyContent="space-between" alignItems="center" width="100%">
             <Accordion.ItemIndicator />
-            <Popover.Root>
-              <Popover.Trigger onClick={(e) => e.stopPropagation()}>
-                <Icon
-                  backgroundColor="transparent"
-                  aria-label="Toggle item"
-                  width="20px"
-                  height="20px"
-                  color="#848484"
-                >
-                  <TbDotsVertical />
-                </Icon>
-              </Popover.Trigger>
-              <Portal>
-                <Popover.Positioner>
-                  <Popover.Content maxWidth="210px">
-                    <Popover.Body padding="7px">
-                      <Button
-                        maxHeight="23px"
-                        backgroundColor="transparent"
-                        color="#ff5e49"
-                        onClick={handleDelete}
-                      >
-                        <Icon as={FaRegTrashAlt} />
-                        <Text>Видалити</Text>
-                      </Button>
-                    </Popover.Body>
-                  </Popover.Content>
-                </Popover.Positioner>
-              </Portal>
-            </Popover.Root>
+            <DeletePopover onDelete={handleDelete} />
           </Flex>
         </Accordion.ItemTrigger>
         <Accordion.ItemContent padding="1.5rem">
           <Stack>
-            <Field.Root>
+            <Field.Root invalid={!!error?.title}>
               <Field.Label>Заголовок</Field.Label>
               <Input
                 id="title"
                 color="black"
                 placeholder="Введіть заголовок компоненту"
                 {...register(
-                  `sections.${sectionIndex}.items.${blockIndex}.title`
+                  `sections.${sectionIndex}.blocks.${blockIndex}.title`
                 )}
               />
-              {/* <Field.ErrorText>{errors.title?.message}</Field.ErrorText> */}
+              <Field.ErrorText>{error?.title?.message}</Field.ErrorText>
             </Field.Root>
-            <Field.Root>
+            <Field.Root invalid={!!error?.description}>
               <Field.Label>Опис</Field.Label>
               <Input
                 id="title"
                 color="black"
                 placeholder="Введіть опис компоненту"
                 {...register(
-                  `sections.${sectionIndex}.items.${blockIndex}.description`
+                  `sections.${sectionIndex}.blocks.${blockIndex}.description`
                 )}
               />
-              {/* <Field.ErrorText>{errors.description?.message}</Field.ErrorText> */}
+              <Field.ErrorText>{error?.description?.message}</Field.ErrorText>
             </Field.Root>
-            <Field.Root>
+            <Field.Root invalid={!!error?.imageUrl}>
               <Field.Label>URL зображення</Field.Label>
               <Input
                 id="title"
                 color="black"
                 placeholder="Введіть URL зображення"
                 {...register(
-                  `sections.${sectionIndex}.items.${blockIndex}.imageUrl`
+                  `sections.${sectionIndex}.blocks.${blockIndex}.imageUrl`
                 )}
               />
-              {/* <Field.ErrorText>{errors.imageUrl?.message}</Field.ErrorText> */}
+              <Field.ErrorText>{error?.imageUrl?.message}</Field.ErrorText>
             </Field.Root>
-            <Field.Root>
-              <Field.Label>URL дії</Field.Label>
+            <Field.Root invalid={!!error?.videoUrl}>
+              <Field.Label>URL відео</Field.Label>
               <Input
                 id="title"
                 color="black"
                 placeholder="Введіть URL дії"
                 {...register(
-                  `sections.${sectionIndex}.items.${blockIndex}.actionUrl`
+                  `sections.${sectionIndex}.blocks.${blockIndex}.videoUrl`
                 )}
               />
-              {/* <Field.ErrorText>{errors.actionUrl?.message}</Field.ErrorText> */}
+              <Field.ErrorText>{error?.videoUrl?.message}</Field.ErrorText>
             </Field.Root>
           </Stack>
         </Accordion.ItemContent>

@@ -6,6 +6,7 @@ export const API_ROUTES = {
     UPDATE: "/screen",
     SECTION: {
       CREATE: "/screen/section",
+      DELETE: "/screen/section",
       ITEM: {
         CREATE: "/screen/section/item",
       },

@@ -1,21 +1,18 @@
 import express from "express";
+import { API_ROUTES } from "../constants";
 import {
-  createScreenController,
-  addSectionToScreenController,
-  addItemToSectionController,
+  deleteSectionController,
+  upsertSectionController,
   updateScreenController,
   getAllScreensController,
-} from "../controllers/screen.controller";
-import { API_ROUTES } from "../constants";
+} from "../controllers";
 
 const router = express.Router();
 
-router.post(API_ROUTES.SCREEN.CREATE, createScreenController);
-router.post(API_ROUTES.SCREEN.SECTION.CREATE, addSectionToScreenController);
-router.post(API_ROUTES.SCREEN.SECTION.ITEM.CREATE, addItemToSectionController);
-
+router.get(API_ROUTES.SCREEN.GET_ALL, getAllScreensController);
 router.put(API_ROUTES.SCREEN.UPDATE, updateScreenController);
 
-// router.get(API_ROUTES.SCREEN.GET, getScreenForMobile);
-router.get(API_ROUTES.SCREEN.GET_ALL, getAllScreensController);
+router.post(API_ROUTES.SCREEN.SECTION.CREATE, upsertSectionController);
+router.delete(API_ROUTES.SCREEN.SECTION.DELETE, deleteSectionController);
+
 export { router as screenRoutes };

@@ -1,20 +1,19 @@
 import mongoose, { Schema, Document } from "mongoose";
+import { SectionType } from "../enums";
 
-export interface IContentItem {
+export interface IBlock {
   _id: string;
   title: string;
-  description?: string;
-  imageUrl?: string;
-  actionUrl?: string;
-  order: number;
+  description: string;
+  imageUrl: string;
+  videoUrl: string;
 }
 
 export interface ISection {
   _id: string;
-  type: "banner" | "vertical" | "horizontal" | "grid";
-  title?: string;
-  items: IContentItem[];
-  order: number;
+  type: SectionType;
+  title: string;
+  blocks: IBlock[];
 }
 
 export interface IScreen {
@@ -25,23 +24,21 @@ export interface IScreen {
   updatedAt: Date;
 }
 
-const ContentItemSchema: Schema = new Schema({
+const BlockSchema: Schema = new Schema({
   title: { type: String, required: true },
   description: { type: String },
   imageUrl: { type: String },
-  actionUrl: { type: String },
-  order: { type: Number, required: true },
+  videoUrl: { type: String },
 });
 
 const SectionSchema: Schema = new Schema({
   type: {
     type: String,
     required: true,
-    enum: ["banner", "vertical", "horizontal", "grid"],
+    enum: Object.values(SectionType),
   },
   title: { type: String },
-  items: [ContentItemSchema],
-  order: { type: Number, required: true },
+  blocks: [BlockSchema],
 });
 
 const ScreenSchema: Schema = new Schema(
@@ -51,5 +48,7 @@ const ScreenSchema: Schema = new Schema(
   },
   { timestamps: true, versionKey: false }
 );
+
+ScreenSchema.index({ name: 1 }, { unique: true });
 
 export const ScreenModel = mongoose.model<IScreen>("screens", ScreenSchema);

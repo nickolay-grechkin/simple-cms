@@ -9,7 +9,6 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Main />}>
-          <Route index element={<div>Home Content</div>} />
           <Route path="schema" element={<SchemaLayout />} />
           <Route path="content" element={<ContentLayout />} />
         </Route>

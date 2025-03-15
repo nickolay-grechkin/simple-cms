@@ -8,12 +8,15 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
+import { RegularButton } from "./RegularButton/RegularButton";
+import { LuView } from "react-icons/lu";
+import { Screen } from "../types";
 
 type JsonPreviewProps = {
-  data: any;
+  data: Screen;
 };
 
-export function JsonPreview({ data }: JsonPreviewProps) {
+export const JsonPreview: React.FC<JsonPreviewProps> = ({ data }) => {
   const [jsonString, setJsonString] = useState("");
   const [hasCopied, setHasCopied] = useState(false);
 
@@ -30,7 +33,13 @@ export function JsonPreview({ data }: JsonPreviewProps) {
 
   return (
     <Dialog.Root size="xl">
-      <Dialog.Trigger colorScheme="blue">Переглянути JSON</Dialog.Trigger>
+      <Dialog.Trigger colorScheme="blue">
+        <RegularButton
+          onClick={() => {}}
+          text="Переглянути JSON"
+          icon={LuView}
+        />
+      </Dialog.Trigger>
       <Portal>
         <Dialog.Backdrop />
         <Dialog.Positioner>
@@ -59,7 +68,7 @@ export function JsonPreview({ data }: JsonPreviewProps) {
               </Box>
             </Dialog.Body>
             <Dialog.Footer>
-              <Button colorScheme="blue" mr={3} onClick={handleCopy}>
+              <Button colorScheme="blue" onClick={handleCopy}>
                 {hasCopied ? "Скопійовано!" : "Копіювати JSON"}
               </Button>
               <Dialog.ActionTrigger>
@@ -71,4 +80,4 @@ export function JsonPreview({ data }: JsonPreviewProps) {
       </Portal>
     </Dialog.Root>
   );
-}
+};

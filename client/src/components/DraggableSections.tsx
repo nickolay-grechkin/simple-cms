@@ -13,15 +13,20 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
+import { BlockSchema, SectionSchema } from "../validation";
+
+type DraggableItem =
+  | (Omit<SectionSchema, "blocks" | "_id"> & { _id: string })
+  | BlockSchema;
 
 type DraggableWrapperProps = {
-  sections: any;
-  onOrderChange: (sections: any) => void;
+  items: DraggableItem[];
+  onOrderChange: (items: DraggableItem[]) => void;
   children: React.ReactNode;
 };
 
 export const DraggableWrapper: React.FC<DraggableWrapperProps> = ({
-  sections,
+  items,
   onOrderChange,
   children,
 }) => {
@@ -40,10 +45,10 @@ export const DraggableWrapper: React.FC<DraggableWrapperProps> = ({
     const { active, over } = event;
 
     if (over && active.id !== over.id) {
-      const oldIndex = sections.findIndex((item) => item._id === active.id);
-      const newIndex = sections.findIndex((item) => item._id === over.id);
+      const oldIndex = items.findIndex((item) => item._id === active.id);
+      const newIndex = items.findIndex((item) => item._id === over.id);
 
-      onOrderChange(arrayMove(sections, oldIndex, newIndex));
+      onOrderChange(arrayMove(items, oldIndex, newIndex));
     }
   }
 
@@ -54,7 +59,7 @@ export const DraggableWrapper: React.FC<DraggableWrapperProps> = ({
       onDragEnd={handleDragEnd}
     >
       <SortableContext
-        items={sections.map((section) => section._id)}
+        items={items.map((section) => section._id)}
         strategy={verticalListSortingStrategy}
       >
         {children}

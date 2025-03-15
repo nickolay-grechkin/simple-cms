@@ -1,10 +1,18 @@
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Tabs, Link } from "@chakra-ui/react";
 import { PiStackSimpleBold } from "react-icons/pi";
 import { FiEdit3 } from "react-icons/fi";
+import { useEffect } from "react";
 
 export const Main: React.FC = () => {
   const pathname = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (pathname.pathname === "/") {
+      navigate("/content");
+    }
+  }, [pathname, navigate]);
 
   return (
     <div>
@@ -31,9 +39,9 @@ export const Main: React.FC = () => {
             }}
             fontWeight="bold"
           >
-            <Link unstyled href="/content#content">
+            <Link unstyled href="/content">
               <FiEdit3 />
-              Content
+              Контент
             </Link>
           </Tabs.Trigger>
           <Tabs.Trigger
@@ -53,7 +61,7 @@ export const Main: React.FC = () => {
           >
             <Link unstyled href="/schema">
               <PiStackSimpleBold />
-              Schema
+              Схема
             </Link>
           </Tabs.Trigger>
         </Tabs.List>

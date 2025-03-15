@@ -1,37 +1,60 @@
-import { Button, Icon, Text } from "@chakra-ui/react";
-import { Control, useFieldArray, UseFormRegister } from "react-hook-form";
+import {
+  Control,
+  FieldErrors,
+  useFieldArray,
+  UseFormRegister,
+  useWatch,
+} from "react-hook-form";
 import { FaPlus } from "react-icons/fa";
-import { SectionsSchemaType } from "../validation";
+import { BlockSchema, SectionsSchemaType } from "../validation";
 import { Block } from "./Block";
 import { DraggableWrapper } from "./DraggableSections";
-import { SectionItem } from "../types";
+import { RegularButton } from "./RegularButton/RegularButton";
+import { DraggableItem } from "../types";
 
 type SectionBlocksProps = {
   control: Control<SectionsSchemaType>;
   register: UseFormRegister<SectionsSchemaType>;
   sectionIndex: number;
+  errors: FieldErrors<SectionsSchemaType>;
 };
 
 export function SectionBlocks({
   control,
   register,
   sectionIndex,
+  errors,
 }: SectionBlocksProps) {
   const { fields, remove, append, replace } = useFieldArray({
     control,
-    name: `sections.${sectionIndex}.items`,
+    name: `sections.${sectionIndex}.blocks`,
+  });
+
+  const items = useWatch({
+    control,
+    name: `sections.${sectionIndex}.blocks`,
   });
 
   const handleDelete = (index: number) => {
     remove(index);
   };
 
-  const handleOrderChange = (items: SectionItem[]) => {
-    replace(items.map((item, index) => ({ ...item, order: index })));
+  const handleAppendBlock = () => {
+    append({
+      _id: `temp-${Date.now()}-${Math.random().toString(36)}`,
+      title: "",
+      description: "",
+      imageUrl: "",
+      videoUrl: "",
+    });
+  };
+
+  const handleOrderChange = (blocks: DraggableItem[]) => {
+    replace(blocks as BlockSchema[]);
   };
 
   return (
-    <DraggableWrapper sections={fields} onOrderChange={handleOrderChange}>
+    <DraggableWrapper items={items} onOrderChange={handleOrderChange}>
       {fields.map((item, index) => (
         <Block
           key={item._id}
@@ -40,25 +63,14 @@ export function SectionBlocks({
           sectionIndex={sectionIndex}
           onDelete={() => handleDelete(index)}
           register={register}
+          error={errors.sections?.[sectionIndex]?.blocks?.[index]}
         />
       ))}
-      <Button
-        backgroundColor="#f0e2fe"
-        color="#6200c4"
-        onClick={() =>
-          append({
-            _id: `temp-${Date.now()}-${Math.random().toString(36)}`,
-            title: "",
-            description: "",
-            imageUrl: "",
-            actionUrl: "",
-            order: fields.length,
-          })
-        }
-      >
-        <Icon as={FaPlus} />
-        <Text>Додати новий блок</Text>
-      </Button>
+      <RegularButton
+        onClick={handleAppendBlock}
+        icon={FaPlus}
+        text="Додати новий блок"
+      />
     </DraggableWrapper>
   );
 }
