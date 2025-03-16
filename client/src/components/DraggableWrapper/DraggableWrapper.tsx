@@ -13,7 +13,7 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { BlockSchema, SectionSchema } from "../validation";
+import { BlockSchema, SectionSchema } from "../../validation";
 
 type DraggableItem =
   | (Omit<SectionSchema, "blocks" | "_id"> & { _id: string })

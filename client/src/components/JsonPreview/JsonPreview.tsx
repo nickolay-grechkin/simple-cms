@@ -1,16 +1,8 @@
-import {
-  Button,
-  CloseButton,
-  Dialog,
-  Portal,
-  Code,
-  Box,
-  Text,
-} from "@chakra-ui/react";
+import { CloseButton, Dialog, Portal, Code, Box, Text } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
-import { RegularButton } from "./RegularButton/RegularButton";
+import { RegularButton } from "../RegularButton/RegularButton";
 import { LuView } from "react-icons/lu";
-import { Screen } from "../types";
+import { Screen } from "../../types";
 
 type JsonPreviewProps = {
   data: Screen;
@@ -68,12 +60,15 @@ export const JsonPreview: React.FC<JsonPreviewProps> = ({ data }) => {
               </Box>
             </Dialog.Body>
             <Dialog.Footer>
-              <Button colorScheme="blue" onClick={handleCopy}>
-                {hasCopied ? "Скопійовано!" : "Копіювати JSON"}
-              </Button>
               <Dialog.ActionTrigger>
-                <Button variant="ghost">Закрити</Button>
+                <RegularButton onClick={() => {}} text="Закрити" />
               </Dialog.ActionTrigger>
+              <RegularButton
+                variant="primary"
+                onClick={handleCopy}
+                text={hasCopied ? "Скопійовано!" : "Копіювати JSON"}
+                maxWidth="150px"
+              />
             </Dialog.Footer>
           </Dialog.Content>
         </Dialog.Positioner>

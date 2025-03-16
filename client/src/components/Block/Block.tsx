@@ -2,8 +2,8 @@ import { Accordion, Flex, Stack, Field, Input } from "@chakra-ui/react";
 import { useSortable } from "@dnd-kit/sortable";
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 import { CSS } from "@dnd-kit/utilities";
-import { BlockSchema, SectionsSchemaType } from "../validation";
-import { DeletePopover } from "./DeletePopover/DeletePopover";
+import { BlockSchema, SectionsSchemaType } from "../../validation";
+import { DeletePopover } from "../DeletePopover/DeletePopover";
 
 type BlockProps = {
   sectionIndex: number;

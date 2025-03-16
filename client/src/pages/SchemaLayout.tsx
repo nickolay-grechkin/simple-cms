@@ -5,12 +5,12 @@ import {
   useUpdateScreen,
 } from "../api/screens";
 import { DraggableItem, Screen } from "../types";
-import { DraggableWrapper } from "../components/DraggableSections";
+import { DraggableWrapper } from "../components/DraggableWrapper/DraggableWrapper";
 import { Box, Flex } from "@chakra-ui/react";
 import { useState } from "react";
 import { useEffect } from "react";
-import { UpsertSectionDialog } from "../components/UpsertSectionDialog";
-import { SectionSchemaItem } from "../components/SectionSchemaItem/SectionSchemaItem";
+import { UpsertSectionDialog } from "../components/Section/UpsertSectionDialog";
+import { SectionSchemaItem } from "../components/Section/SectionSchemaItem";
 import { RegularButton } from "../components/RegularButton/RegularButton";
 import { FaPlus } from "react-icons/fa";
 import { SectionSchema } from "../validation";

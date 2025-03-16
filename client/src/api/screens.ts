@@ -23,7 +23,7 @@ export const useUpdateScreen = () => {
       screenId: string;
       sections: SectionSchema[];
     }) => {
-      const { data } = await apiClient.put("/screen", {
+      const { data } = await apiClient.post("/screen", {
         screenId,
         sections,
       });

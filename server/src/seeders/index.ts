@@ -1,41 +1,142 @@
 import mongoose from "mongoose";
 import { ScreenModel, IScreen } from "../models/screen.model";
 import { connectDB } from "../config/db.config";
+import { SectionType } from "../enums/section";
 
 const screenSeedData: Partial<IScreen>[] = [
   {
-    name: "Home Screen",
+    name: "Головний екран",
     sections: [
       {
         _id: new mongoose.Types.ObjectId().toString(),
-        type: "banner",
-        title: "Featured Content",
-        items: [
+        type: SectionType.BANNER,
+        title: "Баннер",
+        blocks: [
           {
             _id: new mongoose.Types.ObjectId().toString(),
-            title: "Welcome to our App",
-            description: "Discover amazing content and features",
-            imageUrl: "https://example.com/banner.jpg",
-            videoUrl: "/featured",
+            title: "Block 1",
+            description: "Description 1",
+            imageUrl:
+              "https://images.pexels.com/photos/104827/cat-pet-animal-domestic-104827.jpeg",
+            videoUrl: "/block1",
+          },
+          {
+            _id: new mongoose.Types.ObjectId().toString(),
+            title: "Block 2",
+            description: "Description 2",
+            imageUrl:
+              "https://images.pexels.com/photos/104827/cat-pet-animal-domestic-104827.jpeg",
+            videoUrl: "/block2",
+          },
+          {
+            _id: new mongoose.Types.ObjectId().toString(),
+            title: "Block 3",
+            description: "Description 3",
+            imageUrl:
+              "https://images.pexels.com/photos/104827/cat-pet-animal-domestic-104827.jpeg",
+            videoUrl: "/block3",
+          },
+          {
+            _id: new mongoose.Types.ObjectId().toString(),
+            title: "Block 4",
+            description: "Description 4",
+            imageUrl:
+              "https://images.pexels.com/photos/104827/cat-pet-animal-domestic-104827.jpeg",
+            videoUrl: "/block4",
           },
         ],
       },
       {
         _id: new mongoose.Types.ObjectId().toString(),
-        type: "horizontal",
-        title: "Popular Items",
-        items: [
+        type: SectionType.HORIZONTAL,
+        title: "Найбільш популярне",
+        blocks: [
           {
             _id: new mongoose.Types.ObjectId().toString(),
-            title: "Item 1",
-            imageUrl: "https://example.com/item1.jpg",
-            videoUrl: "/item1",
+            title: "Block 1",
+            description: "Description 1",
+            imageUrl:
+              "https://images.pexels.com/photos/416160/pexels-photo-416160.jpeg",
+            videoUrl: "/block1",
           },
           {
             _id: new mongoose.Types.ObjectId().toString(),
-            title: "Item 2",
-            imageUrl: "https://example.com/item2.jpg",
-            videoUrl: "/item2",
+            title: "Block 2",
+            description: "Description 2",
+            imageUrl:
+              "https://images.pexels.com/photos/416160/pexels-photo-416160.jpeg",
+            videoUrl: "/block2",
+          },
+          {
+            _id: new mongoose.Types.ObjectId().toString(),
+            title: "Block 3",
+            description: "Description 3",
+            imageUrl:
+              "https://images.pexels.com/photos/416160/pexels-photo-416160.jpeg",
+            videoUrl: "/block3",
+          },
+          {
+            _id: new mongoose.Types.ObjectId().toString(),
+            title: "Block 4",
+            description: "Description 4",
+            imageUrl:
+              "https://images.pexels.com/photos/416160/pexels-photo-416160.jpeg",
+            videoUrl: "/block4",
+          },
+          {
+            _id: new mongoose.Types.ObjectId().toString(),
+            title: "Block 5",
+            description: "Description 5",
+            imageUrl:
+              "https://images.pexels.com/photos/416160/pexels-photo-416160.jpeg",
+            videoUrl: "/block5",
+          },
+        ],
+      },
+      {
+        _id: new mongoose.Types.ObjectId().toString(),
+        type: SectionType.HORIZONTAL,
+        title: "Найкращий вибір",
+        blocks: [
+          {
+            _id: new mongoose.Types.ObjectId().toString(),
+            title: "Block 1",
+            description: "Description 1",
+            imageUrl:
+              "https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg",
+            videoUrl: "/block1",
+          },
+          {
+            _id: new mongoose.Types.ObjectId().toString(),
+            title: "Block 2",
+            description: "Description 2",
+            imageUrl:
+              "https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg",
+            videoUrl: "/block2",
+          },
+          {
+            _id: new mongoose.Types.ObjectId().toString(),
+            title: "Block 3",
+            description: "Description 3",
+            imageUrl:
+              "https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg",
+            videoUrl: "/block3",
+          },
+          {
+            _id: new mongoose.Types.ObjectId().toString(),
+            title: "Block 4",
+            description: "Description 4",
+            imageUrl:
+              "https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg",
+            videoUrl: "/block4",
+          },
+          {
+            _id: new mongoose.Types.ObjectId().toString(),
+            title: "Block 5",
+            description: "Description 5",
+            imageUrl:
+              "https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg",
+            videoUrl: "/block5",
           },
         ],
       },

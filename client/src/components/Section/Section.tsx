@@ -5,8 +5,8 @@ import {
   useFieldArray,
   UseFormRegister,
 } from "react-hook-form";
-import { SectionsSchemaType } from "../validation";
-import { SectionBlocks } from "./SectionBlocks";
+import { SectionsSchemaType } from "../../validation";
+import { SectionBlocks } from "../Block/SectionBlocks";
 
 type SectionProps = {
   control: Control<SectionsSchemaType>;
@@ -42,7 +42,7 @@ export const Section: React.FC<SectionProps> = ({
         >
           <input type="text" {...register(`sections.${index}.title`)} hidden />
           <div>
-            <Text marginBottom="0.675rem">Section title: {field.title}</Text>
+            <Text marginBottom="0.675rem">Заголовок секції: {field.title}</Text>
           </div>
           <Flex
             flexDirection="column"

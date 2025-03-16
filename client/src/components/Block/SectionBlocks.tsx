@@ -6,11 +6,11 @@ import {
   useWatch,
 } from "react-hook-form";
 import { FaPlus } from "react-icons/fa";
-import { BlockSchema, SectionsSchemaType } from "../validation";
+import { BlockSchema, SectionsSchemaType } from "../../validation";
 import { Block } from "./Block";
-import { DraggableWrapper } from "./DraggableSections";
-import { RegularButton } from "./RegularButton/RegularButton";
-import { DraggableItem } from "../types";
+import { DraggableWrapper } from "../DraggableWrapper/DraggableWrapper";
+import { RegularButton } from "../RegularButton/RegularButton";
+import { DraggableItem } from "../../types";
 
 type SectionBlocksProps = {
   control: Control<SectionsSchemaType>;

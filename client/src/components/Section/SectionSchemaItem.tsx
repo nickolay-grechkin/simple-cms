@@ -3,7 +3,7 @@ import { CSS } from "@dnd-kit/utilities";
 import { Box, Flex, Icon, Text } from "@chakra-ui/react";
 import { MdDragIndicator } from "react-icons/md";
 import { DeletePopover } from "../DeletePopover/DeletePopover";
-import { UpsertSectionDialog } from "../UpsertSectionDialog";
+import { UpsertSectionDialog } from "../Section/UpsertSectionDialog";
 import { useState } from "react";
 import { RegularButton } from "../RegularButton/RegularButton";
 import { FiEdit3 } from "react-icons/fi";

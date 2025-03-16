@@ -1,5 +1,4 @@
 import {
-  Button,
   Dialog,
   Portal,
   Input,
@@ -10,8 +9,9 @@ import {
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { SectionType } from "../enums/section";
-import { sectionSchema, SectionSchema } from "../validation";
+import { SectionType } from "../../enums/section";
+import { sectionSchema, SectionSchema } from "../../validation";
+import { RegularButton } from "../RegularButton/RegularButton";
 
 type UpsertSectionDialogProps = {
   onSave: (data: SectionSchema) => void;
@@ -130,12 +130,17 @@ export const UpsertSectionDialog: React.FC<UpsertSectionDialogProps> = ({
             </Dialog.Body>
 
             <Dialog.Footer>
-              <Button variant="outline" mr={3} onClick={handleClose}>
-                Скасувати
-              </Button>
-              <Button colorScheme="blue" type="submit" form="add-section-form">
-                Зберегти
-              </Button>
+              <Dialog.ActionTrigger>
+                <RegularButton onClick={handleClose} text="Закрити" />
+              </Dialog.ActionTrigger>
+              <RegularButton
+                variant="primary"
+                onClick={() => {}}
+                text="Зберегти"
+                type="submit"
+                form="add-section-form"
+                maxWidth="90px"
+              />
             </Dialog.Footer>
           </Dialog.Content>
         </Dialog.Positioner>

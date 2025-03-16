@@ -2,10 +2,13 @@ import { Button, Text, Icon } from "@chakra-ui/react";
 
 type RegularButtonProps = {
   onClick: () => void;
-  icon: React.ElementType;
+  variant?: "primary" | "secondary";
+  type?: "button" | "submit";
+  form?: string;
+  icon?: React.ElementType;
   text: string;
   maxWidth?: string;
-  color?: string;
+  loading?: boolean;
 };
 
 export const RegularButton: React.FC<RegularButtonProps> = ({
@@ -13,17 +16,26 @@ export const RegularButton: React.FC<RegularButtonProps> = ({
   icon,
   text,
   maxWidth,
-  color = "#6200c4",
+  variant = "secondary",
+  type = "button",
+  loading = false,
+  form,
 }) => {
+  const color = variant === "primary" ? "white" : "#6200c4";
+  const backgroundColor = variant === "primary" ? "#7e00fc" : "#f0e2fe";
+
   return (
     <Button
-      backgroundColor="#f0e2fe"
+      form={form}
+      type={type}
+      backgroundColor={backgroundColor}
       color={color}
       onClick={onClick}
       width="100%"
       maxWidth={maxWidth}
+      loading={loading}
     >
-      <Icon width="16px" height="16px" as={icon} />
+      {icon && <Icon width="16px" height="16px" as={icon} />}
       <Text>{text}</Text>
     </Button>
   );

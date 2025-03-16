@@ -10,7 +10,7 @@ import {
 const router = express.Router();
 
 router.get(API_ROUTES.SCREEN.GET_ALL, getAllScreensController);
-router.put(API_ROUTES.SCREEN.UPDATE, updateScreenController);
+router.post(API_ROUTES.SCREEN.UPDATE, updateScreenController);
 
 router.post(API_ROUTES.SCREEN.SECTION.CREATE, upsertSectionController);
 router.delete(API_ROUTES.SCREEN.SECTION.DELETE, deleteSectionController);

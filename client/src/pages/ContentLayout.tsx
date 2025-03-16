@@ -1,14 +1,15 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import { useGetAllScreens, useUpdateScreen } from "../api/screens";
-import { Box, Button, Flex, Icon } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import { Screen } from "../types";
-import { Section } from "../components/Section";
+import { Section } from "../components/Section/Section";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, useWatch } from "react-hook-form";
-import { JsonPreview } from "../components/JsonPreview";
+import { JsonPreview } from "../components/JsonPreview/JsonPreview";
 import { sectionsSchema, SectionsSchemaType } from "../validation";
 import { IoSaveOutline } from "react-icons/io5";
+import { RegularButton } from "../components/RegularButton/RegularButton";
 
 export const ContentLayout: React.FC = () => {
   const { data: screens, isLoading, error } = useGetAllScreens();
@@ -71,10 +72,15 @@ export const ContentLayout: React.FC = () => {
         <form onSubmit={handleSubmitForm(handleSubmit)}>
           <Section control={control} register={register} errors={errors} />
           <Flex gap="1rem">
-            <Button backgroundColor="#7e00fc" type="submit" loading={isPending}>
-              <Icon as={IoSaveOutline} width="16px" height="16px" />
-              Зберегти
-            </Button>
+            <RegularButton
+              type="submit"
+              variant="primary"
+              onClick={() => {}}
+              text="Зберегти"
+              maxWidth="150px"
+              loading={isPending}
+              icon={IoSaveOutline}
+            />
             <JsonPreview
               data={{
                 _id: currentScreen._id,

@@ -1,4 +1,3 @@
-import "./App.css";
 import { ContentLayout } from "./pages/ContentLayout";
 import { Main } from "./pages/Main";
 import { SchemaLayout } from "./pages/SchemaLayout";

@@ -8,7 +8,7 @@ import { ChakraProvider, defaultSystem } from "@chakra-ui/react";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 1000 * 60 * 5, // 5 хвилин
+      staleTime: 1000 * 60 * 5,
       refetchOnWindowFocus: false,
     },
   },
